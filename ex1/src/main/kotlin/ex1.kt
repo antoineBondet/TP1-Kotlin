@@ -62,5 +62,25 @@ println ("$Frequence $frequence")
     println ("$Aplatissement $aplatissement")
 
 // Centrage et réduction de la liste rndList : pour chaque élément de la liste, soustrayez la moyenne et divisez par l'écart-type en utilisant la méthode map et une expression lambda. Stockez le résultat dans une nouvelle liste zList. Calculez la moyenne et l'écart-type de cette nouvelle liste. Que constatez-vous ?
+    val zList = rndList.map { (it - avg) / ecartType }
+    val ZList = "Liste centrée et réduite:"
+    println("$ZList $zList")
+
+    val avgZ = zList.sumOf { it } / zList.size.toDouble()
+    val MoyenneZ = "Moyenne de la liste centrée et réduite:"
+    println ("$MoyenneZ $avgZ")
+
+    var varianceZ = 0.0
+    for (i in zList.indices) {
+        varianceZ += (zList[i] - avgZ) * (zList[i] - avgZ)
+    }
+    varianceZ /= zList.size.toDouble()
+    val VarianceZ = "Variance de la liste centrée et réduite:"
+    println ("$VarianceZ $varianceZ")
+
+    val ecartTypeZ = sqrt(varianceZ)
+    val EcartTypeZ = "Ecart Type de la liste centrée et réduite:"
+    println ("$EcartTypeZ $ecartTypeZ")
+
 
 }
