@@ -1,4 +1,5 @@
 import kotlin.math.sqrt
+import kotlin.system.measureTimeMillis
 
 fun main() {
     //Pour calculer la moyenne des valeurs de cette liste on peut utiliser la méthode SumOf qui prend une expression lambda en argument. Ce qui donne :
@@ -82,5 +83,56 @@ println ("$Frequence $frequence")
     val EcartTypeZ = "Ecart Type de la liste centrée et réduite:"
     println ("$EcartTypeZ $ecartTypeZ")
 
+//Comparer les performances de la méthode sumOf avec une boucle for pour calculer la moyenne et la variance de la liste. Pour cela, utilisez la méthode measureTimeMillis de la bibliothèque kotlin.system pour mesurer le temps d'exécution de chaque méthode. Que constatez-vous
 
-}
+
+
+        // Mesure du temps pour sumOf (moyenne)
+        var avgSumOf = 0.0
+        val timeSumOfMean = measureTimeMillis {
+            avgSumOf = rndList.sumOf { it } / rndList.size.toDouble()
+        }
+
+        // Mesure du temps pour sumOf (variance)
+        var varianceSumOf = 0.0
+        val timeSumOfVariance = measureTimeMillis {
+            varianceSumOf = rndList.sumOf { (it - avgSumOf) * (it - avgSumOf) } / rndList.size
+        }
+
+        // Mesure du temps pour boucle for (moyenne)
+        var avgFor: Double
+    avgFor = 0.0
+    val timeForMean = measureTimeMillis {
+            var sum = 0.0
+            for (i in rndList) {
+                sum += i
+            }
+            avgFor = sum / rndList.size
+        }
+
+        // Mesure du temps pour boucle for (variance)
+        var varianceFor: Double
+    val timeForVariance = measureTimeMillis {
+            var sumVariance = 0.0
+            for (i in rndList) {
+                sumVariance += (i - avgFor) * (i - avgFor)
+            }
+            varianceFor = sumVariance / rndList.size
+        }
+
+        // Affichage des résultats
+        println("Moyenne avec sumOf : $avgSumOf")
+        println("Variance avec sumOf : $varianceSumOf")
+        println("Temps d'exécution de sumOf (moyenne) : $timeSumOfMean ms")
+        println("Temps d'exécution de sumOf (variance) : $timeSumOfVariance ms")
+
+        println("\nMoyenne avec for : $avgFor")
+        println("Variance avec for : $varianceFor")
+        println("Temps d'exécution de for (moyenne) : $timeForMean ms")
+        println("Temps d'exécution de for (variance) : $timeForVariance ms")
+    }
+
+
+
+
+
